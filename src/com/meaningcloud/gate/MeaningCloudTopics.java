@@ -148,7 +148,7 @@ public class MeaningCloudTopics extends AbstractLanguageAnalyser implements Proc
 
   @RunTime
   @Optional
-  @CreoleParameter(defaultValue = "true",
+  @CreoleParameter(defaultValue = "false",
       comment = "This paramater indicates how reliable the text (as far as spelling, typography, etc. are concerned) to analyze is, and influences how strict the engine will be when it comes to take these factors into account in the topic extraction.")
   public void setRelaxedTypography(Boolean relaxedTypography) {
     this.relaxedTypography = relaxedTypography;
@@ -273,7 +273,6 @@ public class MeaningCloudTopics extends AbstractLanguageAnalyser implements Proc
               .field("dm", translateDM(getDisambiguationType()))
               .field("sdg", translateSDG(getSemanticDisambiguationGrouping()))
               .field("cont", getDisambiguationContext()).asJson();
-      
       Gson gson = new Gson();
       TopicsResponse topicsResponse =
           gson.fromJson(jsonResponse.getBody().toString(), TopicsResponse.class);
@@ -510,8 +509,9 @@ public class MeaningCloudTopics extends AbstractLanguageAnalyser implements Proc
       if(topic.getSubentities() != null && !topic.getSubentities().isEmpty()) {
         setTopicsAnnotationsAndFeatures(topic.getSubentities(), outputAnnSet, topicType);
       }
-      
-      outputAnnSet.add(Long.parseLong(topic.getVariants().get(0).getInip()), Long.parseLong(topic.getVariants().get(0).getEndp()) + 1, topicType, features);
+      for (Variant variant : topic.getVariants()) {
+        outputAnnSet.add(Long.parseLong(variant.getInip()), Long.parseLong(variant.getEndp()) + 1, topicType, features);
+      }
     }
   }
 }
