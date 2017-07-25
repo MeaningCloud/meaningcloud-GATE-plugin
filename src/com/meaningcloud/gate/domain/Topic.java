@@ -19,6 +19,8 @@ public class Topic {
   List<Semrefer> semrefers;
   @SerializedName("semtheme_list")
   List<Semtheme> semthemes;
+  @SerializedName("standard_list")
+  List<Standard> standards;
   @SerializedName("variant_list")
   List<Variant> variants;
   String relevance;
@@ -97,6 +99,14 @@ public class Topic {
     this.semthemes = semthemes;
   }
 
+  public List<Standard> getStandards() {
+    return standards;
+  }
+
+  public void setStandards(List<Standard> standards) {
+    this.standards = standards;
+  }
+
   public List<Variant> getVariants() {
     return variants;
   }
@@ -121,7 +131,7 @@ public class Topic {
     this.subentities = subentities;
   }
 
-  class Sementity {
+  public class Sementity {
     @SerializedName("class")
     String semClass;
     String fiction;
@@ -162,7 +172,7 @@ public class Topic {
     
   }
   
-  class Semgeo {
+  public class Semgeo {
     HierarchyLevel continent;
     HierarchyLevel country;
     HierarchyLevel adm1;
@@ -227,7 +237,7 @@ public class Topic {
       this.district = district;
     }
 
-    class HierarchyLevel {
+    public class HierarchyLevel {
       String form;
       String id;
       @SerializedName("standard_list")
@@ -254,7 +264,7 @@ public class Topic {
     }
   }
   
-  class Standard {
+  public class Standard {
     String id;
     String value;
     
@@ -272,7 +282,7 @@ public class Topic {
     }
   }
   
-  class Semrefer {
+  public class Semrefer {
     SemreferType organization;
     SemreferType affinity;
     
@@ -292,7 +302,7 @@ public class Topic {
       this.affinity = affinity;
     }
 
-    class SemreferType {
+    public class SemreferType {
       String form;
       String id;
       
@@ -311,7 +321,7 @@ public class Topic {
     }
   }
   
-  class Semtheme {
+  public class Semtheme {
     String id;
     String type;
     
@@ -329,7 +339,7 @@ public class Topic {
     }
   }
   
-  class Variant {
+  public class Variant {
     String form;
     String inip;
     String endp;

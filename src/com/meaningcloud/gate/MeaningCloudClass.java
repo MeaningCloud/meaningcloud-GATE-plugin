@@ -36,6 +36,7 @@ import gate.util.InvalidOffsetException;
     helpURL = "https://www.meaningcloud.com/developer/text-classification/doc/1.1",
     icon = "/MeaningCloud.png")
 public class MeaningCloudClass extends AbstractLanguageAnalyser implements ProcessingResource {
+  
   private String url, key, title, model, categories, inputASName;
   private List<String> annotationTypes = new ArrayList<String>();
   private Boolean verbose;

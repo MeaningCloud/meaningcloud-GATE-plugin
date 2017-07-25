@@ -47,7 +47,7 @@ public class Quotation {
     this.endp = endp;
   }
 
-  class Aux {
+  public class Aux {
     String form;
     String lemma;
     

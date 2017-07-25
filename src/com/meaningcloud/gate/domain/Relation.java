@@ -70,7 +70,7 @@ public class Relation {
     this.degree = degree;
   }
 
-  class Subject {
+  public class Subject {
     String form;
     @SerializedName("lemma_list")
     List<String> lemmas;
@@ -97,7 +97,7 @@ public class Relation {
     }
   }
   
-  class Verb {
+  public class Verb {
     String form;
     @SerializedName("lemma_list")
     List<String> lemmas;
@@ -132,7 +132,7 @@ public class Relation {
     }
   }
   
-  class Complement {
+  public class Complement {
     String form;
     String type;
     
