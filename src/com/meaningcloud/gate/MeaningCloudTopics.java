@@ -40,6 +40,15 @@ import gate.creole.metadata.Optional;
 import gate.creole.metadata.RunTime;
 import gate.util.InvalidOffsetException;
 
+/**
+ * MeaningCloud Topics Extraction API Processing Resource for GATE.
+ * <p>This class implements the required methods to implement a ProcessingResource.</p>
+ * <p>It carries the analysis of a document and extract named entities, concepts
+ * and different types of expressions from its text.</p>
+ * 
+ * @author Carlos Abad
+ * @version 1.0.0
+ */
 @SuppressWarnings("serial")
 @CreoleResource(name = "MeaningCloud Topics Extraction", comment = "Meaningcloud Topics Extraction",
     helpURL = "https://www.meaningcloud.com/developer/topics-extraction/doc/2.0",
@@ -113,7 +122,7 @@ public class MeaningCloudTopics extends AbstractLanguageAnalyser implements Proc
 
   @RunTime
   @Optional
-  @CreoleParameter(comment = "Output Annotation Set", defaultValue = "MeaningCloud")
+  @CreoleParameter(comment = "Output Annotation Set", defaultValue = "MeaningCloud Topics")
   public void setOutputASName(String outputASName) {
     this.outputASName = outputASName;
   }
@@ -196,6 +205,14 @@ public class MeaningCloudTopics extends AbstractLanguageAnalyser implements Proc
     this.disambiguationContext = disambiguationContext;
   }
 
+  /**
+   * This method carries the analysis of the document provided.
+   * <p>This PR analyze the whole document and tag its text with different annotations,
+   * as described in the 
+   * <a heref="https://www.meaningcloud.com/developer/topics-extraction/doc/2.0/response">documentation</a></p>
+   *  
+   * @throws gate.creole.ExecutionException
+   */
   @Override
   public void execute() throws ExecutionException {
     if (document == null)

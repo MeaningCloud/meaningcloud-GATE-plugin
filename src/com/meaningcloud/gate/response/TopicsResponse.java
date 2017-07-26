@@ -12,6 +12,14 @@ import com.meaningcloud.gate.domain.Status;
 import com.meaningcloud.gate.domain.TimeExpression;
 import com.meaningcloud.gate.domain.Topic;
 
+/**
+ * Java bean implementation for
+ * <a href="https://www.meaningcloud.com/developer/topics-extraction/doc/2.0/response"><code>response</code></a>
+ * object of the MeaningCloud Topics Extraction API.
+ * 
+ * @author Carlos Abad
+ * @version 1.0.0
+ */
 public class TopicsResponse {
   Status status;
   @SerializedName("entity_list")

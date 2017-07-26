@@ -29,10 +29,18 @@ import gate.creole.metadata.Optional;
 import gate.creole.metadata.RunTime;
 import gate.util.InvalidOffsetException;
 
+/**
+ * MeaningCloud Language Identification API Processing Resource for GATE.
+ * <p>This class implements the required methods to implement a ProcessingResource.</p>
+ * <p>It carries the analysis of a document and guess the language of its text.</p>
+ * 
+ * @author Carlos Abad
+ * @version 1.0.0
+ */
 @SuppressWarnings("serial")
 @CreoleResource(name = "MeaningCloud Language Identification",
     comment = "Meaningcloud Language Identification",
-    helpURL = "***REMOVED***",
+    helpURL = "https://www.meaningcloud.com/developer/language-identification/doc/2.0",
     icon = "/MeaningCloud.png")
 public class MeaningCloudLang extends AbstractLanguageAnalyser implements ProcessingResource {
 
@@ -106,6 +114,21 @@ public class MeaningCloudLang extends AbstractLanguageAnalyser implements Proces
     this.annotationTypes = annotationTypes;
   }
 
+  /**
+   * This method carries the analysis of the document provided.
+   * <p>It has two main different working methods:</p>
+   * <ol>
+   *    <li>When no <code>inputASName</code> parameter is provided, this PR analyze the whole
+   *    document and guess its language (or most likely languages). The languages are returned 
+   *    as features of the document itself.</li>
+   *    <li>When <code>inputASName</code> and <code>annotationTypes</code> parameters are provided,
+   *    this PR filter the categories of the input AnnotationSet according to the expression provided in 
+   *    <code>annotationTypes</code>, and the language identification is carried only for the text included 
+   *    in the filtered annotations. The languages are returned as features of this annotations.</li>
+   * </ol>
+   * 
+   * @throws gate.creole.ExecutionException
+   */
   @Override
   public void execute() throws ExecutionException {
     if (document == null)

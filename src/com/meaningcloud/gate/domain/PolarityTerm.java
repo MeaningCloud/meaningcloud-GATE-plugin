@@ -4,6 +4,14 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Java bean implementation for
+ * <a href="https://www.meaningcloud.com/developer/sentiment-analysis/doc/2.1/response#polarity_term"><code>polarity_term</code></a>
+ * object of the MeaningCloud Sentiment Analysis API.
+ * 
+ * @author Carlos Abad
+ * @version 1.0.0
+ */
 public class PolarityTerm {
   String text;
   String inip;

@@ -30,6 +30,15 @@ import gate.creole.metadata.Optional;
 import gate.creole.metadata.RunTime;
 import gate.util.InvalidOffsetException;
 
+/**
+ * MeaningCloud Text Classification API Processing Resource for GATE.
+ * <p>This class implements the required methods to implement a ProcessingResource.</p>
+ * <p>It carries the analysis of a document and classifies its text according to an 
+ * input classification model, assigning one or more categories to the text provided.</p>
+ * 
+ * @author Carlos Abad
+ * @version 1.0.0
+ */
 @SuppressWarnings("serial")
 @CreoleResource(name = "MeaningCloud Text Classification",
     comment = "Meaningcloud Text Classification",
@@ -131,6 +140,21 @@ public class MeaningCloudClass extends AbstractLanguageAnalyser implements Proce
     this.annotationTypes = annotationTypes;
   }
 
+  /**
+   * This method carries the analysis of the document provided.
+   * <p>It has two main different working methods:</p>
+   * <ol>
+   *    <li>When no <code>inputASName</code> parameter is provided, this PR analyze the whole
+   *    document and categorize the text according to the model provided. The categories are returned
+   *    as features of the document itself.</li>
+   *    <li>When <code>inputASName</code> and <code>annotationTypes</code> parameters are provided,
+   *    this PR filter the categories of the input AnnotationSet according to the expression provided in 
+   *    <code>annotationTypes</code>, and the categorization is carried only for the text included 
+   *    in the filtered annotations. The categories are returned as features of this annotations.</li>
+   * </ol>
+   * 
+   * @throws gate.creole.ExecutionException
+   */
   @Override
   public void execute() throws ExecutionException {
     if (document == null)

@@ -2,6 +2,14 @@ package com.meaningcloud.gate.domain;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Java bean implementation for
+ * <a href="https://www.meaningcloud.com/developer/topics-extraction/doc/2.0/response#money-expression"><code>money_epression</code></a>
+ * object of the MeaningCloud Topics Extraction API.
+ * 
+ * @author Carlos Abad
+ * @version 1.0.0
+ */
 public class MoneyExpression {
   String form;
   @SerializedName("amount_form")

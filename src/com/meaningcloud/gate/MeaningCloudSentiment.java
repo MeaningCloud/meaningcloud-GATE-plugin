@@ -32,6 +32,16 @@ import gate.creole.metadata.Optional;
 import gate.creole.metadata.RunTime;
 import gate.util.InvalidOffsetException;
 
+/**
+ * MeaningCloud Sentiment Analysis API Processing Resource for GATE.
+ * <p>This class implements the required methods to implement a ProcessingResource.</p>
+ * <p>It carries the analysis of a document and provide document and aspect level sentiment
+ * of its text. It also extract named entities and concepts and identifies the terms that
+ * provide polarity to the text.</p>
+ * 
+ * @author Carlos Abad
+ * @version 1.0.0
+ */
 @SuppressWarnings("serial")
 @CreoleResource(name = "MeaningCloud Sentiment analysis", comment = "Meaningcloud Sentiment Analysis",
     helpURL = "https://www.meaningcloud.com/developer/sentiment-analysis/doc/2.1",
@@ -206,6 +216,14 @@ public class MeaningCloudSentiment extends AbstractLanguageAnalyser implements P
     this.semanticDisambiguationGrouping = semanticDisambiguationGrouping;
   }
   
+  /**
+   * This method carries the analysis of the document provided.
+   * <p>This PR analyze the whole document and tag its text with different annotations,
+   * as described in the 
+   * <a heref="https://www.meaningcloud.com/developer/sentiment-analysis/doc/2.1/response">documentation</a></p>
+   *  
+   * @throws gate.creole.ExecutionException
+   */
   @Override
   public void execute() throws ExecutionException {
     if (document == null)

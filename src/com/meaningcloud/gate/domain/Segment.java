@@ -4,6 +4,14 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Java bean implementation for
+ * <a href="https://www.meaningcloud.com/developer/sentiment-analysis/doc/2.1/response#segment"><code>segment</code></a>
+ * object of the MeaningCloud Sentiment Analysis API.
+ * 
+ * @author Carlos Abad
+ * @version 1.0.0
+ */
 public class Segment {
   String text;
   @SerializedName("segment_type")

@@ -11,7 +11,27 @@ import gate.AnnotationSet;
 import gate.Factory;
 import gate.FeatureMap;
 
+/**
+ * This class implements common methods used for parameter handling
+ * or particular functionality of some PRs
+ * 
+ * @author Carlos Abad
+ * @version 1.0.0
+ */
 public class Utils {
+  
+  /**
+   * Filters an AnnotationSet by an expression. This expression could be:
+   * <ul>
+   *    <li>AnnotationSet.FeatureName</li>
+   *    <li>AnnotationSet.FeatureName==FeatureValue</li>
+   * </ul>
+   * Only the annotations that match this expression will be returned.
+   * 
+   * @param inputAS AnnotationSet to filter
+   * @param inputAnnExpr expression used as pattern to filter the AnotationSet
+   * @return AnnotationSet containing matching annotations
+   */
   public static AnnotationSet getFilteredAS(AnnotationSet inputAS, String inputAnnExpr) {
     // We allow inputAnnExpr of the form
     // Annotation.feature == value or just Annotation.feature
@@ -41,10 +61,25 @@ public class Utils {
     return filteredAS;
   }
 
+  /**
+   * Transforms parameters from Boolean to String, to match MeaningCloud
+   * APIs request parameters format ('y' or 'n').
+   * 
+   * @param bool parameter to transform
+   * @return transformed parameter as String
+   */
   public static String boolTransform(boolean bool) {
     return bool ? "y" : "n";
   }
   
+  /**
+   * Translates <code>dm</code> parameter from values of an Enum to String, to match
+   * MeaningCloud APIs request parameters format ('n', 'm' or 's').
+   * 
+   * @param dm parameter to translate
+   * @return translated parameter as String
+   * @see com.meaningcloud.gate.param.DisambiguationType
+   */
   public static String translateDM(DisambiguationType dm) {
     String stringDM = "s";
     if (dm != null && dm.equals(DisambiguationType.NO_DISAMBIGUATION))
@@ -57,6 +92,14 @@ public class Utils {
     return stringDM;
   }
 
+  /**
+   * Translates <code>sdg</code> parameter from values of an Enum to String, to match
+   * MeaningCloud APIs request parameters format ('n', 'g', 't, or 'l').
+   * 
+   * @param sdg parameter to translate
+   * @return translated parameter as String
+   * @see com.meaningcloud.gate.param.SemanticDisambiguationGrouping
+   */
   public static String translateSDG(SemanticDisambiguationGrouping sdg) {
     String stringSDG = "l";
     if (sdg != null && sdg.equals(SemanticDisambiguationGrouping.NONE))
@@ -71,6 +114,14 @@ public class Utils {
     return stringSDG;
   }
   
+  /**
+   * Translates <code>rt</code> parameter from values of an Enum to String, to match
+   * MeaningCloud APIs request parameters format ('n', 'u' or 'y').
+   * 
+   * @param rt parameter to translate
+   * @return translated parameter as String
+   * @see com.meaningcloud.gate.param.RelaxedTypography
+   */
   public static String translateRT(RelaxedTypography rt) {
     String stringRT = "n";
     if (rt != null && rt.equals(RelaxedTypography.DISABLED))
@@ -83,6 +134,14 @@ public class Utils {
     return stringRT;
   }
   
+  /**
+   * Translates <code>ud</code> parameter from a list of Strings to a String with values 
+   * separated with <code>|</code> character, to match MeaningCloud APIs request parameters
+   * format.
+   * 
+   * @param userDictionaries list of user dictionaries names
+   * @return String with the user dictionaries separated with <code>|</code>
+   */
   public static String translateUD(List<String> userDictionaries) {
     String ud = "";
     if (userDictionaries.size() > 0) {

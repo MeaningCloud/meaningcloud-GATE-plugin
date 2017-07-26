@@ -2,6 +2,13 @@ package com.meaningcloud.gate.domain;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Java bean implementation for <code>status</object>
+ * object of the different MeaningCloud APIs.
+ * 
+ * @author Carlos Abad
+ * @version 1.0.0
+ */
 public class Status {
   String code;
   String msg;

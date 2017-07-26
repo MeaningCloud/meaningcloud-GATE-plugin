@@ -4,6 +4,14 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Java bean implementation for
+ * <a href="https://www.meaningcloud.com/developer/topics-extraction/doc/2.0/response#relation"><code>relation</code></a>
+ * object of the MeaningCloud Topics Extraction API.
+ * 
+ * @author Carlos Abad
+ * @version 1.0.0
+ */
 public class Relation {
   String form;
   String inip;

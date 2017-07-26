@@ -7,6 +7,14 @@ import com.meaningcloud.gate.domain.Sentence;
 import com.meaningcloud.gate.domain.SentimentedTopic;
 import com.meaningcloud.gate.domain.Status;
 
+/**
+ * Java bean implementation for
+ * <a href="https://www.meaningcloud.com/developer/sentiment-analysis/doc/2.1/response"><code>response</code></a>
+ * object of the MeaningCloud Sentiment Analysis API.
+ * 
+ * @author Carlos Abad
+ * @version 1.0.0
+ */
 public class SentimentResponse {
   Status status;
   String model;

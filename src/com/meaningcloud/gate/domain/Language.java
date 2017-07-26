@@ -2,6 +2,14 @@ package com.meaningcloud.gate.domain;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Java bean implementation for
+ * <a href="https://www.meaningcloud.com/developer/language-identification/doc/2.0/response"><code>language</code></a>
+ * object of the MeaningCloud Language Identification API.
+ * 
+ * @author Carlos Abad
+ * @version 1.0.0
+ */
 public class Language {
   String language;
   String relevance;

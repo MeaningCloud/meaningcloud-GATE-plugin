@@ -1,5 +1,13 @@
 package com.meaningcloud.gate.domain;
 
+/**
+ * Java bean implementation for
+ * <a href="https://www.meaningcloud.com/developer/topics-extraction/doc/2.0/response#quotation"><code>quotation</code></a>
+ * object of the MeaningCloud Topics Extraction API.
+ * 
+ * @author Carlos Abad
+ * @version 1.0.0
+ */
 public class Quotation {
   String form;
   Aux who;

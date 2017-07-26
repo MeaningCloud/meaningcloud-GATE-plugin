@@ -4,6 +4,14 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Java bean implementation for 
+ * <a href="https://www.meaningcloud.com/developer/text-classification/doc/1.1/response"><code>category</code></a>
+ * object of the MeaningCloud Text Classification API.
+ * 
+ * @author Carlos Abad
+ * @version 1.0.0
+ */
 public class Category {
   String code;
   String label;
