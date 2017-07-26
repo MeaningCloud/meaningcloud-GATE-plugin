@@ -2,8 +2,6 @@ package com.meaningcloud.gate.domain;
 
 import java.util.List;
 
-import javax.swing.text.Segment;
-
 import com.google.gson.annotations.SerializedName;
 
 public class Sentence {
@@ -16,7 +14,7 @@ public class Sentence {
   String scoreTag;
   String agreement;
   @SerializedName("segment_list")
-  List<Segment> segmants;
+  List<Segment> segments;
   @SerializedName("sentimented_entity_list")
   List<SentimentedTopic> sentimentedEntities;
   @SerializedName("sentimented_concept_list")
@@ -64,11 +62,11 @@ public class Sentence {
   public void setAgreement(String agreement) {
     this.agreement = agreement;
   }
-  public List<Segment> getSegmants() {
-    return segmants;
+  public List<Segment> getSegments() {
+    return segments;
   }
-  public void setSegmants(List<Segment> segmants) {
-    this.segmants = segmants;
+  public void setSegments(List<Segment> segments) {
+    this.segments = segments;
   }
   public List<SentimentedTopic> getSentimentedEntities() {
     return sentimentedEntities;

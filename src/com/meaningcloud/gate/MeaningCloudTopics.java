@@ -46,12 +46,11 @@ import gate.util.InvalidOffsetException;
     icon = "/MeaningCloud.png")
 public class MeaningCloudTopics extends AbstractLanguageAnalyser implements ProcessingResource {
 
-  private String url, key, lang, ilang, topicTypes, outputASName;
+  private String url, key, lang, ilang, topicTypes, disambiguationContext, outputASName;
   private List<String> userDictionaries = new ArrayList<String>();
   private Boolean unknownWords, relaxedTypography, subtopics;
   private DisambiguationType disambiguationType;
   private SemanticDisambiguationGrouping semanticDisambiguationGrouping;
-  private String disambiguationContext;
 
   public String getUrl() {
     return url;
@@ -197,44 +196,6 @@ public class MeaningCloudTopics extends AbstractLanguageAnalyser implements Proc
     this.disambiguationContext = disambiguationContext;
   }
 
-  private String translateDM(DisambiguationType dm) {
-    String stringDM = "s";
-    if (dm.equals(DisambiguationType.NO_DISAMBIGUATION))
-      stringDM = "n";
-    else if (dm.equals(DisambiguationType.MORPHOSYNTACTIC_DISAMBIGUATION))
-      stringDM = "m";
-    else if (dm.equals(DisambiguationType.SEMANTIC_DISAMBIGUATION))
-      stringDM = "s";
-
-    return stringDM;
-  }
-
-  private String translateSDG(SemanticDisambiguationGrouping sdg) {
-    String stringSDG = "l";
-    if (sdg.equals(SemanticDisambiguationGrouping.NONE))
-      stringSDG = "n";
-    else if (sdg.equals(SemanticDisambiguationGrouping.GLOBAL_INTERSECTION))
-      stringSDG = "g";
-    else if (sdg.equals(SemanticDisambiguationGrouping.INTERSECTION_BY_TYPE))
-      stringSDG = "t";
-    else if (sdg.equals(SemanticDisambiguationGrouping.INTERSECTION_BY_TYPE_SMALLEST_LOCATION))
-      stringSDG = "l";
-
-    return stringSDG;
-  }
-  
-  private String translateUD(List<String> userDictionaries) {
-    String ud = "";
-    if (userDictionaries.size() > 0) {
-      for (String userDict : userDictionaries) {
-        ud += userDict + "|";
-      }
-      ud.substring(0, ud.length() - 1);
-    }
-    
-    return ud;
-  }
-
   @Override
   public void execute() throws ExecutionException {
     if (document == null)
@@ -268,10 +229,10 @@ public class MeaningCloudTopics extends AbstractLanguageAnalyser implements Proc
               .field("ilang", getIlang()).field("txt", text).field("tt", getTopicTypes())
               .field("uw", Utils.boolTransform(getUnknownWords()))
               .field("rt", Utils.boolTransform(getRelaxedTypography()))
-              .field("ud", translateUD(getUserDictionaries()))
+              .field("ud", Utils.translateUD(getUserDictionaries()))
               .field("st", Utils.boolTransform(getSubtopics()))
-              .field("dm", translateDM(getDisambiguationType()))
-              .field("sdg", translateSDG(getSemanticDisambiguationGrouping()))
+              .field("dm", Utils.translateDM(getDisambiguationType()))
+              .field("sdg", Utils.translateSDG(getSemanticDisambiguationGrouping()))
               .field("cont", getDisambiguationContext()).asJson();
       Gson gson = new Gson();
       TopicsResponse topicsResponse =
