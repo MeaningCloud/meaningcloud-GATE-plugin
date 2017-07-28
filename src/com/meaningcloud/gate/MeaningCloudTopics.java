@@ -374,7 +374,7 @@ public class MeaningCloudTopics extends AbstractLanguageAnalyser implements Proc
     for (Topic topic : topics) {
       FeatureMap features = Factory.newFeatureMap();
       features.put("form", topic.getForm());
-      if (topic.getOfficialForm() != null);
+      if (topic.getOfficialForm() != null)
         features.put("official_form", topic.getOfficialForm());
       if (topic.getDictionary() != null)
         features.put("dictionary", topic.getDictionary());
@@ -470,7 +470,7 @@ public class MeaningCloudTopics extends AbstractLanguageAnalyser implements Proc
       if (topic.getVariants() != null && !topic.getVariants().isEmpty()) {
         List<String> variants = new ArrayList<String>();
         List<ArrayList<String>> offsets = new ArrayList<ArrayList<String>>();
-        for (Variant variant : topic.getVariants()) {
+        for (final Variant variant : topic.getVariants()) {
           variants.add(variant.getForm());
           ArrayList<String> offs = new ArrayList<String>() {{
             add(variant.getInip());
