@@ -163,12 +163,14 @@ public class MeaningCloudClass extends AbstractLanguageAnalyser implements Proce
     if (key == null || key.trim().isEmpty())
       throw new ExecutionException("No API Key Provided");
 
-    AnnotationSet inputAnnSet = document.getAnnotations(inputASName);
-
+    AnnotationSet inputAnnSet = null;
+    if(inputASName != null)
+      inputAnnSet = document.getAnnotations(inputASName);
+      
     String text = "";
     DocumentContent content = document.getContent();
 
-    if (inputAnnSet.isEmpty()) {
+    if (inputAnnSet == null || inputAnnSet.isEmpty()) {
       text += content.toString();
       try {
         process(text, null);
@@ -177,11 +179,22 @@ public class MeaningCloudClass extends AbstractLanguageAnalyser implements Proce
       }
     } else {
       if (annotationTypes.size() == 0) {
-        text += content.toString();
-        try {
-          process(text, null);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
+        AnnotationSet filteredAS = document.getAnnotations(inputASName);
+        Iterator<Annotation> it = gate.Utils.inDocumentOrder(filteredAS).iterator();
+        while (it.hasNext()) {
+          Annotation ann = it.next();
+          try {
+            text =
+                content.getContent(ann.getStartNode().getOffset(), ann.getEndNode().getOffset())
+                    .toString();
+          } catch (InvalidOffsetException ex) {
+            Logger.getLogger(MeaningCloudLang.class.getName()).log(Level.SEVERE, null, ex);
+          }
+          try {
+            process(text, ann);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
         }
       } else {
         for (String inputAnnExpr : annotationTypes) {
