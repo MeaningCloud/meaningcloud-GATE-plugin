@@ -251,6 +251,17 @@ public class MeaningCloudSentiment extends AbstractLanguageAnalyser implements P
     }
   }
   
+  /**
+   * This method makes a request to the Sentiment Analysis API, maps it to a 
+   * {@link com.meaningcloud.gate.response.SentimentResponse} object and starts the
+   * annotation process.
+   * 
+   * @param text text to analyze
+   * @param outputAnnSet {@link gate.AnnotationSet} in which the new annotations will be added
+   * @throws InterruptedException
+   * @throws NumberFormatException
+   * @throws InvalidOffsetException
+   */
   private void process(String text, AnnotationSet outputAnnSet) throws InterruptedException, NumberFormatException, InvalidOffsetException {
     try {
       HttpResponse<JsonNode> jsonResponse =
@@ -288,6 +299,16 @@ public class MeaningCloudSentiment extends AbstractLanguageAnalyser implements P
     }
   }
   
+  /**
+   * This method sets the document features with the analysis returned by the Sentiment analysis API.
+   * Document level analysis is set as new features in the document itself, and then aspect level analysis
+   * is set as new annotations and features in the text.
+   * 
+   * @param sentimentResponse response from the Sentiment Analysis API
+   * @param outputAnnSet AnnotationSet in which the new annotations will be included
+   * @throws NumberFormatException
+   * @throws InvalidOffsetException
+   */
   private void setDocAnnotationsAndFeatures(SentimentResponse sentimentResponse, AnnotationSet outputAnnSet) throws NumberFormatException, InvalidOffsetException {
     FeatureMap docFeatures = Factory.newFeatureMap();
     docFeatures.put("model", sentimentResponse.getModel());
@@ -322,6 +343,16 @@ public class MeaningCloudSentiment extends AbstractLanguageAnalyser implements P
     }
   }
   
+  /**
+   * This method adds new annotations with features from the list of <code>sentimented_entity</code> and
+   * <code>sentimented_concept</code> objects included in the response.
+   * 
+   * @param topics list of entities or concepts obtained from the Sentiment Analysis API response
+   * @param outputAnnSet AnnotationSet in which the new annotations will be included
+   * @param topicType name of the annotation to add (<code>SentimentedEntity</code> or <code>SentimentedConcept</code>
+   * @throws NumberFormatException
+   * @throws InvalidOffsetException
+   */
   private void setAnnotationsForSentimentedTopics(List<SentimentedTopic> topics, AnnotationSet outputAnnSet, String topicType) throws NumberFormatException, InvalidOffsetException {
     for (SentimentedTopic topic : topics) {
       if (topic.getInip() != null && topic.getEndp() != null) {
@@ -338,6 +369,15 @@ public class MeaningCloudSentiment extends AbstractLanguageAnalyser implements P
     }
   }
   
+  /**
+   * This method adds new annotations with features from the list of <code>segment</code> objects
+   * included in the response.
+   * 
+   * @param segments list of segments obtained from the Sentiment Analysis API response
+   * @param outputAnnSet AnnotationSet in which the new annotations will be included
+   * @throws NumberFormatException
+   * @throws InvalidOffsetException
+   */
   private void setAnnotationsForSegments(List<Segment> segments, AnnotationSet outputAnnSet) throws NumberFormatException, InvalidOffsetException {
     for (Segment segment : segments) {
       FeatureMap features = Factory.newFeatureMap();
@@ -362,6 +402,15 @@ public class MeaningCloudSentiment extends AbstractLanguageAnalyser implements P
     }
   }
   
+  /**
+   * This method adds new annotations with features from the list of <code>polarity_term</code> objects
+   * included in the response.
+   * 
+   * @param terms list of polarity_terms obtained from the Sentiment Analysis API response
+   * @param outputAnnSet AnnotationSet in which the new annotations will be included
+   * @throws NumberFormatException
+   * @throws InvalidOffsetException
+   */
   private void setAnnotationsForPolarityTerms(List<PolarityTerm> terms, AnnotationSet outputAnnSet) throws NumberFormatException, InvalidOffsetException {
     for (PolarityTerm term : terms) {
       FeatureMap features = Factory.newFeatureMap();

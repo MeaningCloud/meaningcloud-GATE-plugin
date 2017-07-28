@@ -194,6 +194,15 @@ public class MeaningCloudLang extends AbstractLanguageAnalyser implements Proces
     }
   }
 
+  /**
+   * This method makes a request to the Language Identification API, maps it to a 
+   * {@link com.meaningcloud.gate.response.LangResponse} object and starts the
+   * annotation process. 
+   * 
+   * @param text text to analyze
+   * @param inputAnn annotation in which the new features are going to be added (if any)
+   * @throws InterruptedException
+   */
   private void process(String text, Annotation inputAnn) throws InterruptedException {
     String type = "";
     if (inputAnn != null)
@@ -227,6 +236,14 @@ public class MeaningCloudLang extends AbstractLanguageAnalyser implements Proces
     }
   }
 
+  /**
+   * This method receives the response from the Language identification API and add the 
+   * different categories as new features to the document (or to the input annotations,
+   * if provided) 
+   * 
+   * @param langResponse response from the Language Identification API
+   * @param inputAnn annotation in which the new features have to be added. If <code>null</code>, features will be added to the document.
+   */
   private void setDocFeatures(LangResponse langResponse, Annotation inputAnn) {
     FeatureMap fm = Factory.newFeatureMap();
     List<String> langs = new ArrayList<String>();

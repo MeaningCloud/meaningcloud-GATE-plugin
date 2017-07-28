@@ -238,6 +238,17 @@ public class MeaningCloudTopics extends AbstractLanguageAnalyser implements Proc
     }
   }
   
+  /**
+   * This method makes a request to the Topics Extraction API, maps it to a 
+   * {@link com.meaningcloud.gate.response.TopicsResponse} object and starts
+   * the annotation process.
+   * 
+   * @param text text to analyze
+   * @param outputAnnSet {@link gate.AnnotationSet} in which the new annotations will be added
+   * @throws InterruptedException
+   * @throws NumberFormatException
+   * @throws InvalidOffsetException
+   */
   private void process(String text, AnnotationSet outputAnnSet) throws InterruptedException, NumberFormatException, InvalidOffsetException {
     try {
       HttpResponse<JsonNode> jsonResponse =
@@ -273,6 +284,16 @@ public class MeaningCloudTopics extends AbstractLanguageAnalyser implements Proc
     }
   }
   
+  /**
+   * This method sets the annotations and features with the analysis returned by the Topics Extraction API.
+   * All first level response objects are annotated, and inner information is included as features
+   * for these annotations.
+   * 
+   * @param topicsResponse response from the Topics Extraction API
+   * @param outputAnnSet AnnotationSet in which the new annotations will be included
+   * @throws NumberFormatException
+   * @throws InvalidOffsetException
+   */
   private void setDocAnnotations(TopicsResponse topicsResponse, AnnotationSet outputAnnSet) throws NumberFormatException, InvalidOffsetException {
     if (topicsResponse.getEntities() != null && !topicsResponse.getEntities().isEmpty()) {
       setTopicsAnnotationsAndFeatures(topicsResponse.getEntities(), outputAnnSet, "Entity");
@@ -370,6 +391,17 @@ public class MeaningCloudTopics extends AbstractLanguageAnalyser implements Proc
     }
   }
 
+  /**
+   * This method sets the annotations for the <code>entity</code> and <code>concept</code> objects returned in the 
+   * Topics Extraction API. Inner objects are flattened and returned as new features of the <code>entity</code>
+   * and <code>concept</code> annotations. 
+   * 
+   * @param topics list of entities or concepts obtained from the Topics Extraction API
+   * @param outputAnnSet AnnotationSet in which the new annotations will be included
+   * @param topicType name of the annotation to add (<code>Entity</code> or <code>Concept</code>)
+   * @throws NumberFormatException
+   * @throws InvalidOffsetException
+   */
   private void setTopicsAnnotationsAndFeatures(List<Topic> topics, AnnotationSet outputAnnSet, String topicType) throws NumberFormatException, InvalidOffsetException {
     for (Topic topic : topics) {
       FeatureMap features = Factory.newFeatureMap();

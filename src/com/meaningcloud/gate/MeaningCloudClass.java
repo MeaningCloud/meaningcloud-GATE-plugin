@@ -220,6 +220,15 @@ public class MeaningCloudClass extends AbstractLanguageAnalyser implements Proce
     }
   }
 
+  /**
+   * This method makes a request to the Text Classification API, maps it to a 
+   * {@link com.meaningcloud.gate.response.ClassResponse} object and starts the
+   * annotation process. 
+   * 
+   * @param text text to analyze
+   * @param inputAnn annotation in which the new features are going to be added (if any)
+   * @throws InterruptedException
+   */
   private void process(String text, Annotation inputAnn) throws InterruptedException {
     try {
       HttpResponse<JsonNode> jsonResponse = Unirest.post(getUrl())
@@ -250,6 +259,14 @@ public class MeaningCloudClass extends AbstractLanguageAnalyser implements Proce
     }
   }
 
+  /**
+   * This method receives the response from the Text Classification API and add the 
+   * different categories as new features to the document (or to the input annotations,
+   * if provided) 
+   * 
+   * @param classResponse response from the Text Classification API
+   * @param inputAnn annotation in which the new features have to be added. If <code>null</code>, features will be added to the document.
+   */
   private void setDocFeatures(ClassResponse classResponse, Annotation inputAnn) {
     List<Category> categories = classResponse.getCategories();
     if (categories.size() > 0) {
