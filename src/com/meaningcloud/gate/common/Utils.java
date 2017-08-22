@@ -148,9 +148,8 @@ public class Utils {
       for (String userDict : userDictionaries) {
         ud += userDict + "|";
       }
-      ud.substring(0, ud.length() - 1);
+      ud = ud.substring(0, ud.length() - 1);
     }
-    
     return ud;
   }
 }
