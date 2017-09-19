@@ -363,11 +363,13 @@ public class MeaningCloudTopics extends AbstractLanguageAnalyser implements Proc
       for (Relation relation : topicsResponse.getRelations()) {
         FeatureMap features = Factory.newFeatureMap();
         features.put("form", relation.getForm());
-        features.put("subject_form", relation.getSubject().getForm());
-        if (relation.getSubject().getLemmas() != null && !relation.getSubject().getLemmas().isEmpty())
-          features.put("subject_lemmas", relation.getSubject().getLemmas());
-        if (relation.getSubject().getSenseIds() != null && !relation.getSubject().getSenseIds().isEmpty())
-          features.put("subject_sense_ids", relation.getSubject().getSenseIds());
+        if (relation.getSubject() != null) {
+          features.put("subject_form", relation.getSubject().getForm());
+          if (relation.getSubject().getLemmas() != null && !relation.getSubject().getLemmas().isEmpty())
+            features.put("subject_lemmas", relation.getSubject().getLemmas());
+          if (relation.getSubject().getSenseIds() != null && !relation.getSubject().getSenseIds().isEmpty())
+            features.put("subject_sense_ids", relation.getSubject().getSenseIds());
+        }
         features.put("verb_form", relation.getVerb().getForm());
         if (relation.getVerb().getLemmas() != null && !relation.getVerb().getLemmas().isEmpty())
           features.put("verb_lemmas", relation.getVerb().getLemmas());
