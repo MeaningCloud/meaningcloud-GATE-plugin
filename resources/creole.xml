@@ -9,12 +9,12 @@ com.meaningcloud.gate.MeaningCloudLang.
 
 <CREOLE-DIRECTORY
   ID="com.meaningcloud.gate.MeaningCloud"
-  VERSION="3.0.5"
+  VERSION="3.0.6"
   DESCRIPTION="MeaningCloud Plugin for the GATE Platform"
   HELPURL="http://www.meaningcloud.com/developer/gate-plugin"
   ICON="/MeaningCloud.png"
 >
-  <JAR SCAN="true">MeaningCloud-3.0.5.jar</JAR>
+  <JAR SCAN="true">MeaningCloud-3.0.6.jar</JAR>
   <JAR>lib/gson-2.8.1.jar</JAR>
   <JAR>lib/unirest-java-1.4.9-jar-with-dependencies.jar</JAR>
 </CREOLE-DIRECTORY>
