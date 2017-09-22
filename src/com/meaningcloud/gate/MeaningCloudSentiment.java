@@ -5,10 +5,9 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import com.mashape.unirest.request.body.MultipartBody;
 import com.meaningcloud.gate.common.Utils;
 import com.meaningcloud.gate.domain.PolarityTerm;
 import com.meaningcloud.gate.domain.Segment;
@@ -264,7 +263,7 @@ public class MeaningCloudSentiment extends AbstractLanguageAnalyser implements P
    */
   private void process(String text, AnnotationSet outputAnnSet) throws InterruptedException, NumberFormatException, InvalidOffsetException {
     try {
-      HttpResponse<JsonNode> jsonResponse =
+      MultipartBody request =
           Unirest.post(getUrl()).header("Content-Type", "application/x-www-form-urlencoded")
               .field("key", getKey()).field("src", "gate_3.0").field("lang", getLang())
               .field("ilang", getIlang()).field("txt", text)
@@ -276,10 +275,12 @@ public class MeaningCloudSentiment extends AbstractLanguageAnalyser implements P
               .field("ud", Utils.translateUD(getUserDictionaries()))
               .field("dm", Utils.translateDM(getDisambiguationType()))
               .field("sdg", Utils.translateSDG(getSemanticDisambiguationGrouping()))
-              .field("cont", getDisambiguationContext()).asJson();
+              .field("cont", getDisambiguationContext());
+      String response = request.asString().getBody();
+      
       Gson gson = new Gson();
       SentimentResponse sentimentResponse =
-          gson.fromJson(jsonResponse.getBody().toString(), SentimentResponse.class);
+          gson.fromJson(response, SentimentResponse.class);
       
       if (!sentimentResponse.getStatus().getCode().equals("0")) {
         if (sentimentResponse.getStatus().getCode().equals("104")) {

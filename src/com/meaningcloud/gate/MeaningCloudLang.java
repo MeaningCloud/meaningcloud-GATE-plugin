@@ -7,10 +7,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import com.mashape.unirest.request.body.MultipartBody;
 import com.meaningcloud.gate.common.Utils;
 import com.meaningcloud.gate.domain.Language;
 import com.meaningcloud.gate.response.LangResponse;
@@ -209,14 +208,15 @@ public class MeaningCloudLang extends AbstractLanguageAnalyser implements Proces
       type = inputAnn.getType();
 
     try {
-      HttpResponse<JsonNode> jsonResponse =
+      MultipartBody request =
           Unirest.post(getUrl()).header("Content-Type", "application/x-www-form-urlencoded")
               .field("key", getKey()).field("src", "gate_3.0").field("txt", text)
-              .field("selection", getSelection()).field("threshold", getThreshold()).asJson();
+              .field("selection", getSelection()).field("threshold", getThreshold());
+      String response = request.asString().getBody();
 
       Gson gson = new Gson();
       LangResponse langResponse =
-          gson.fromJson(jsonResponse.getBody().toString(), LangResponse.class);
+          gson.fromJson(response, LangResponse.class);
 
       if (!langResponse.getStatus().getCode().equals("0")) {
         if (langResponse.getStatus().getCode().equals("104")) {

@@ -7,10 +7,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import com.mashape.unirest.request.body.MultipartBody;
 import com.meaningcloud.gate.common.Utils;
 import com.meaningcloud.gate.domain.Category;
 import com.meaningcloud.gate.domain.Category.Term;
@@ -231,15 +230,16 @@ public class MeaningCloudClass extends AbstractLanguageAnalyser implements Proce
    */
   private void process(String text, Annotation inputAnn) throws InterruptedException {
     try {
-      HttpResponse<JsonNode> jsonResponse = Unirest.post(getUrl())
+      MultipartBody request = Unirest.post(getUrl())
           .header("Content-Type", "application/x-www-form-urlencoded").field("key", getKey())
           .field("src", "gate_3.0").field("verbose", Utils.boolTransform(getVerbose()))
           .field("title", getTitle()).field("txt", text).field("model", getModel())
-          .field("categories", getCategories()).asJson();
+          .field("categories", getCategories());
+      String response = request.asString().getBody();
 
       Gson gson = new Gson();
       ClassResponse classResponse =
-          gson.fromJson(jsonResponse.getBody().toString(), ClassResponse.class);
+          gson.fromJson(response, ClassResponse.class);
 
       if (!classResponse.getStatus().getCode().equals("0")) {
         if (classResponse.getStatus().getCode().equals("104")) {
